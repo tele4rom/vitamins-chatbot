@@ -18,11 +18,12 @@ app.add_middleware(
 )
 
 # Инициализация клиентов
-pinecone_client = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
+import pinecone
+pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment="us-east-1-aws")
 openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Подключение к индексу
-index = pinecone_client.Index("vitamins-catalog-v2")
+index = pinecone.Index("vitamins-catalog-v2")
 
 # Модели данных
 class ChatMessage(BaseModel):
