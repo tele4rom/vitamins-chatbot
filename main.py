@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import pinecone
+from pinecone import Pinecone
 from openai import OpenAI
 import os
 from typing import List, Optional
@@ -23,8 +23,18 @@ app.add_middleware(
 
 # Инициализация клиентов
 import pinecone
-pinecone.init(api_key=os.getenv("PINECONE_API_KEY"), environment="us-east-1-aws")
-openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Проверка наличия ключей
+PINECONE_KEY = os.getenv("PINECONE_API_KEY")
+OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+
+if not PINECONE_KEY:
+    raise ValueError("PINECONE_API_KEY not found in environment variables")
+if not OPENAI_KEY:
+    raise ValueError("OPENAI_API_KEY not found in environment variables")
+
+pinecone.init(api_key=PINECONE_KEY, environment="us-east-1-aws")
+openai_client = OpenAI(api_key=OPENAI_KEY)
 
 # Подключение к индексу
 index = pinecone.Index("vitamins-catalog-v2")
