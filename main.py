@@ -5,6 +5,10 @@ import pinecone
 from openai import OpenAI
 import os
 from typing import List, Optional
+from dotenv import load_dotenv
+
+# Загрузка переменных окружения
+load_dotenv()
 
 app = FastAPI()
 
