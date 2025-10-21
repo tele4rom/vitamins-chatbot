@@ -2,5 +2,5 @@ fastapi
 uvicorn
 pinecone-client
 openai
-pydantic
+pydantic 
 python-dotenv
